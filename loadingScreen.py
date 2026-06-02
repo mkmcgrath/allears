@@ -1,5 +1,4 @@
 import curses
-from PIL import Image, ImageSequence
 import time
 
 

@@ -44,12 +44,14 @@ def interface_scan():
     interfaces = wifi.interfaces()
 
     if not interfaces:
-        print("No WiFi interfaces found.")
+        print("\nERROR: No WiFi interfaces found.")
+        print("This usually happens on Linux if wpa_supplicant is not configured with a control interface.")
+        print("Ensure 'ctrl_interface=/var/run/wpa_supplicant' is in your /etc/wpa_supplicant/wpa_supplicant.conf")
         return None
 
-    iface = interfaces[0]  # Assume the first interface is the one to use
+    iface = interfaces[0]
     iface.scan()
-    print("Scanning for networks...")
+    print(f"Scanning for networks on {iface.name()}...")
 
     results = iface.scan_results()
     return results
@@ -167,7 +169,7 @@ def main():
             else:
                 print("No networks found.")
 
-            sleep(6)  # Introduce a short delay
+            sleep(3)  # Introduce a short delay
 
     except KeyboardInterrupt:
         print("\nScanning stopped by user (Ctrl+C).")
